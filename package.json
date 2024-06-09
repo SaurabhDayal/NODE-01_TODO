@@ -1,0 +1,24 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx db-migrate up && nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "db-migrate": "^0.11.15",
+    "db-migrate-pg": "^1.5.2",
+    "express": "^4.18.3",
+    "express-validation": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-pg-migrate": "^6.2.2",
+    "nodemon": "^3.0.1",
+    "pool": "^0.4.1"
+  }
+}
