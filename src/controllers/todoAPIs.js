@@ -26,9 +26,16 @@ const getAllTodo = async (req, res, next) => {
   if (!isCompleted) {
     isCompleted = null;
   }
-  const selectQuery = `SELECT id, todoValue as todo, isCompleted FROM todos WHERE user_id=$1 AND (iscompleted::boolean=$2 OR $2 IS NULL)`;
+  const SQL = `SELECT id,
+                      todoValue as todo,
+                      isCompleted 
+               FROM todos 
+               WHERE user_id=$1 
+                  AND (iscompleted::boolean=$2 OR $2 IS NULL)
+                  AND archieved_at IS NULL
+`;
   try {
-    const result = await pool.query(selectQuery, [user_id, isCompleted]);
+    const result = await pool.query(SQL, [user_id, isCompleted]);
     res.status(200).json({
       todos: result.rows,
     });
@@ -65,10 +72,10 @@ const deleteTodo = (req, res, next) => {
   const { id } = req.query;
   const { user_id } = req;
 
-  const archieveQuery = `UPDATE todos SET archieved_at=CURRENT_TIMESTAMP WHERE id = $1 AND user_id=$2`; //* pass current time stamp for current date
+  const SQL = `UPDATE todos SET archieved_at=CURRENT_TIMESTAMP WHERE id = $1 AND user_id=$2`; //* pass current time stamp for current date
 
   try {
-    const result = pool.query(archieveQuery, [id, user_id]);
+    const result = pool.query(SQL, [id, user_id]);
     res.status(202).json({
       message: "Deleted Successfully",
     });
